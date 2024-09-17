@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Lab Test List</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url('F:/hospital-website-template/lab image/_Bachelor of Medical Laboratory Science Career Scope.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #032649; /* Dark blue font color */
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background-color: rgba(135, 206, 235, 0.5); /* Transparent white background */
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .btn-generate {
+            background-color: #28a745; /* Green button color */
+            color: white;
+        }
+        .btn-back {
+            background-color: #032649; /* Dark blue button color */
+            color: white;
+        }
+        table {
+            margin: 20px 0;
+        }
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Today's Lab Test List</h2>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Patient Name</th>
+                    <th>ID</th>
+                    <th>Blood Group</th>
+                    <th>Test Name</th>
+                    <th>Test Code</th> <!-- New column for Test ID -->
+                    
+                    <th>Doctor Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Anu</td>
+                    <td>001</td>
+                    <td>O+</td>
+                    <td>Blood Test</td>
+                    <td>BT1002</td> <!-- Test Code for Blood Test -->
+                   
+                    <td>Dr.Tegin</td>
+                    <td><button class="btn btn-generate" onclick="generateReport('Anu', '001', 'Dr.Tegin', 'BT1002')">Generate</button></td>
+                </tr>
+                <tr>
+                    <td>Akash</td>
+                    <td>002</td>
+                    <td>A-</td>
+                    <td>Urine Test</td>
+                    <td>UT1001</td> <!-- Test Code for Urine Test -->
+                    
+                    <td>Dr.Tefin</td>
+                    <td><button class="btn btn-generate" onclick="generateReport('Akash', '002', 'Dr.Tefin', 'UT1001')">Generate</button></td>
+                </tr>
+                <tr>
+                    <td>Karthick</td>
+                    <td>003</td>
+                    <td>B+</td>
+                    <td>Sugar Test</td>
+                    <td>ST1003</td> <!-- Test Code for Sugar Test -->
+                    
+                    <td>Dr.Sharma</td>
+                    <td><button class="btn btn-generate" onclick="generateReport('Karthick', '003', 'Dr.Sharma', 'ST1003')">Generate</button></td>
+                </tr>
+                <tr>
+                    <td>Shanu</td>
+                    <td>004</td>
+                    <td>AB-</td>
+                    <td>Cholesterol Test</td>
+                    <td>CT1004</td> <!-- Test Code for Cholesterol Test -->
+                    
+                    <td>Dr.Ravi</td>
+                    <td><button class="btn btn-generate" onclick="generateReport('Shanu', '004', 'Dr.Ravi', 'CT1004')">Generate</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-back mb-3" onclick="goBack()">Back</button>
+    </div>
+
+    <script>
+        function generateReport(patientName, patientId, doctorName, testCode) {
+            // Redirect to report.html with patient details including testCode
+            window.location.href = `5.3.report.html?patientName=${encodeURIComponent(patientName)}&patientId=${encodeURIComponent(patientId)}&doctorName=${encodeURIComponent(doctorName)}&testCode=${encodeURIComponent(testCode)}`;
+        }
+
+        function goBack() {
+            // Redirect to labTechnician.html
+            window.location.href = "5.labTechnician.html";
+        }
+
+        // Save initial test data to session storage (as requested, instead of localStorage)
+        function saveTestData() {
+            const testData = [
+                { name: 'Anu', id: '001', bloodGroup: 'O+', tests: 'Blood Test', testCode: 'BT1002', taken: 'Yes', doctor: 'Dr.Tegin' },
+                { name: 'Akash', id: '002', bloodGroup: 'A-', tests: 'Urine Test', testCode: 'UT1001', taken: 'No', doctor: 'Dr.Tefin' },
+                { name: 'Karthick', id: '003', bloodGroup: 'B+', tests: 'Sugar Test', testCode: 'ST1003', taken: 'No', doctor: 'Dr.Sharma' },
+                { name: 'Shanu', id: '004', bloodGroup: 'AB-', tests: 'Cholesterol Test', testCode: 'CT1004', taken: 'No', doctor: 'Dr.Ravi' }
+            ];
+            sessionStorage.setItem('todaysLabTests', JSON.stringify(testData));
+        }
+
+        saveTestData(); // Save data when the page loads
+    </script>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

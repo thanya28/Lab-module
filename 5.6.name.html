@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search by Test Name</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('F:/hospital-website-template/lab image/lab test.webp'); /* Replace with your local image path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: white;
+        }
+        .search-container {
+            margin: 50px auto;
+            max-width: 300px;
+            background-color: rgba(135, 206, 250, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .search-container .form-control {
+            border-radius: 20px;
+            padding: 10px 15px;
+            font-size: 16px;
+        }
+        .search-container .btn {
+            border-radius: 20px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .result-container {
+            margin: 30px auto;
+            max-width: 600px;
+        }
+        table {
+            background-color: rgba(135, 206, 250, 0.8); /* Sky blue with transparency */
+            border-radius: 10px;
+        }
+        .table thead th {
+            background-color: rgba(0, 123, 255, 0.8); /* Darker blue for table header */
+        }
+        .no-result {
+            color: red;
+        }
+        .back-btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .back-btn {
+            background-color: #007bff;
+            color: white;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container search-container">
+        <h2 class="text-center">Search Patient by Test Name</h2>
+        <input type="text" id="testName" class="form-control mb-3" placeholder="Enter Test Name">
+        <button class="btn btn-primary btn-block" onclick="searchByName()">Search</button>
+    </div>
+
+    <div class="container result-container">
+        <table id="resultTable" class="table table-bordered table-hover" style="display: none;">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Patient Name</th>
+                    <th>ID</th>
+                    <th>Blood Group</th>
+                    <th>Test Name</th>
+                    <th>Taken</th>
+                    <th>Doctor Name</th>
+                </tr>
+            </thead>
+            <tbody id="resultBody"></tbody>
+        </table>
+        <p id="noResult" class="no-result text-center" style="display: none;">No patient found.</p>
+    </div>
+
+    <!-- Back Button -->
+    <div class="back-btn-container">
+        <a href="F:/hospital-website-template/5.labTechnician.html" class="back-btn">Back</a>
+    </div>
+
+    <script>
+        function searchByName() {
+            const testName = document.getElementById('testName').value.trim().toLowerCase();
+            const resultTable = document.getElementById('resultTable');
+            const resultBody = document.getElementById('resultBody');
+            const noResult = document.getElementById('noResult');
+
+            // Clear previous results
+            resultBody.innerHTML = '';
+            resultTable.style.display = 'none';
+            noResult.style.display = 'none';
+
+            // Fetch the stored data from sessionStorage
+            const testData = JSON.parse(sessionStorage.getItem('todaysLabTests')) || [];
+
+            // Filter patients by the testName entered
+            const patients = testData.filter(item => item.tests.toLowerCase() === testName);
+
+            if (patients.length > 0) {
+                // Iterate over each matched patient and add their details to the table
+                patients.forEach(patient => {
+                    const row = `
+                        <tr>
+                            <td>${patient.name}</td>
+                            <td>${patient.id}</td>
+                            <td>${patient.bloodGroup}</td>
+                            <td>${patient.tests}</td>
+                            <td>${patient.taken}</td>
+                            <td>${patient.doctor}</td>
+                        </tr>
+                    `;
+                    resultBody.innerHTML += row;
+                });
+                resultTable.style.display = 'table'; // Show the table
+            } else {
+                // Show "No patient found" if no matches
+                noResult.style.display = 'block';
+            }
+        }
+
+        // To test, you can manually set testData in sessionStorage if needed
+        sessionStorage.setItem('todaysLabTests', JSON.stringify([
+            { name: "Anu", id: "001", bloodGroup: "O+", tests: "Blood Test", testCode: "BT1002", taken: "Yes", doctor: "Dr.Tegin" },
+            { name: "Akash", id: "002", bloodGroup: "A-", tests: "Urine Test", testCode: "UT1001", taken: "No", doctor: "Dr.Tefin" },
+            { name: "Karthick", id: "003", bloodGroup: "B+", tests: "Sugar Test", testCode: "ST1003", taken: "No", doctor: "Dr.Sharma" },
+            { name: "Shanu", id: "004", bloodGroup: "AB-", tests: "Cholesterol Test", testCode: "CT1004", taken: "No", doctor: "Dr.Ravi" }
+        ]));
+    </script>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

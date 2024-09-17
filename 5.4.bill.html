@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #032649;
+            margin: 0;
+            padding: 0;
+            background-color: rgba(135, 206, 235, 0.2);
+        }
+        .container {
+            margin: 20px;
+        }
+        .btn-print, .btn-cancel {
+            background-color: #87CEEB;
+            color: #032649;
+        }
+        .table-container {
+            margin-top: 20px;
+        }
+        footer {
+            background-color: #f8f9fa;
+            padding: 10px 0;
+            position: relative;
+            width: 100%;
+            bottom: 0;
+        }
+        .footer-content {
+            text-align: center;
+            margin: 0 auto;
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4">Patient Bill</h2>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Hospital Information</h4>
+                <p><strong>Hospital Name:</strong> Babu Hospital</p>
+                <p><strong>Phone:</strong> 9487507918</p>
+                <p><strong>Address:</strong>Kazhakootam, Thiruvananthapuram</p>
+                <p><strong>Email:</strong> babuhospital@gmail.com</p>
+            </div>
+            <div class="col-md-6">
+                <h4>Patient Information</h4>
+                <p><strong>Patient Name:</strong> <span id="patient-name"></span></p>
+                <p><strong>Patient ID:</strong> <span id="patient-id"></span></p>
+                <p><strong>Date:</strong> <span id="bill-date"></span></p>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h4>Test Charges</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Test Name</th>
+                        <th>Test ID</th>
+                        <th>Charge</th>
+                    </tr>
+                </thead>
+                <tbody id="test-charges">
+                    <!-- Test charges will be inserted here dynamically -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-container mt-4">
+            <h4>Total Summary</h4>
+            <table class="table table-bordered">
+                <tfoot>
+                    <tr>
+                        <td><strong>Subtotal:</strong></td>
+                        <td id="subtotal">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tax (10%):</strong></td>
+                        <td id="tax">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Grand Total:</strong></td>
+                        <td id="grand-total">$0.00</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        <button class="btn btn-print no-print" onclick="printBill()">Print Bill</button>
+        <button class="btn btn-cancel no-print" onclick="cancel()">Cancel</button>
+    </div>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2024 Babu Hospital. All rights reserved.</p>
+            <p>Address: Kazhakootam, Thiruvananthapuram| Phone: 9487507918</p>
+            <p>Email: babuhospital@gmail.com</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const billData = JSON.parse(sessionStorage.getItem('billData'));
+
+            if (!billData) {
+                alert('No bill data found.');
+                window.location.href = 'report.html'; // Redirect if no data is found
+                return;
+            }
+
+            const { patientName, patientId, testResults } = billData;
+
+            const today = new Date();
+            const dateString = today.toISOString().split('T')[0];
+
+            document.getElementById('patient-name').textContent = patientName;
+            document.getElementById('patient-id').textContent = patientId;
+            document.getElementById('bill-date').textContent = dateString;
+
+            loadTestCharges(testResults);
+        });
+
+        function loadTestCharges(testResults) {
+            const testChargesTable = document.getElementById('test-charges');
+            let subtotal = 0;
+            
+            testChargesTable.innerHTML = '';
+            testResults.forEach(test => {
+                const charge = (test.highRange - test.lowRange).toFixed(2);
+                subtotal += parseFloat(charge);
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${test.name}</td>
+                    <td>${test.id}</td>
+                    <td>$${charge}</td>
+                `;
+                testChargesTable.appendChild(row);
+            });
+
+            const tax = (subtotal * 0.10).toFixed(2);
+            const grandTotal = (subtotal + parseFloat(tax)).toFixed(2);
+
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('tax').textContent = `$${tax}`;
+            document.getElementById('grand-total').textContent = `$${grandTotal}`;
+        }
+
+        function printBill() {
+            window.print();
+        }
+
+        function cancel() {
+            window.location.href = '5.labTechnician.html'; // Redirect to the report page
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Report</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #032649;
+            margin: 0;
+            padding: 0;
+            background-color: rgba(135, 206, 235, 0.2);
+        }
+        .btn-generate-bill, .btn-add-test, .btn-edit {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-cancel, .btn-delete {
+            background-color: #003366;
+            color: white;
+        }
+        .btn-print {
+            background-color:#003366 ;
+            color:white;
+        }
+        .table-container {
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            margin: 20px 0;
+            background-color: rgba(135, 206, 235, 0.5);
+        }
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        footer {
+            background-color: #f8f9fa;
+            padding: 10px 0;
+            position: relative;
+            width: 100%;
+            bottom: 0;
+        }
+        .footer-content {
+            text-align: center;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container table-container">
+        <h2 class="mb-4 text-center">Patient Report</h2>
+
+        <div class="row mb-4">
+            <div class="col-md-6 mb-3 mb-md-0">
+                <h4>Hospital Information</h4>
+                <p><strong>Hospital Name:</strong>Babu Hospital</p>
+                <p><strong>Phone:</strong> 9587507918</p>
+                <p><strong>Address:</strong>  Kazhakootam, Thiruvananthapuram </p>
+                <p><strong>Email:</strong> babuhospital@gmail.com</p>
+            </div>
+            <div class="col-md-6">
+                <h4>Patient Information</h4>
+                <p><strong>Patient Name:</strong> <span id="patient-name"></span></p>
+                <p><strong>Patient ID:</strong> <span id="patient-id"></span></p>
+                <p><strong>Doctor Name:</strong> <span id="doctor-name"></span></p>
+                <p><strong>Date:</strong> <span id="report-date"></span></p>
+            </div>
+        </div>
+
+        <h4>Test Results</h4>
+        <table class="table table-bordered table-responsive">
+            <thead>
+                <tr>
+                    <th>Test Name</th>
+                    <th>Test ID</th>
+                    <th>Sample Taken</th>
+                    <th>Low Range</th>
+                    <th>High Range</th>
+                    <th>Actual Range</th>
+                    <th>Remarks</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="test-results">
+                <!-- Test results will be inserted here dynamically -->
+            </tbody>
+        </table>
+
+        <div class="mb-3 text-center">
+            <button class="btn btn-print mx-2" onclick="printReport()">Print</button>
+            <button class="btn btn-generate-bill mx-2" onclick="generateBill()">Generate Bill</button>
+            <button class="btn btn-add-test mx-2" onclick="addTest()">Add Test Results</button>
+            <button class="btn btn-cancel mx-2" onclick="cancel()">Cancel</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2024 Babu Hospital. All rights reserved.</p>
+            <p>Address: Babu Hospitals, Kazhakootam, Thiruvananthapuram | Phone: (123) 456-7890</p>
+            <p>Email: babuhospital@gmail.com</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const patientName = urlParams.get('patientName');
+            const patientId = urlParams.get('patientId');
+            const doctorName = urlParams.get('doctorName');
+
+            const today = new Date();
+            const dateString = today.toISOString().split('T')[0];
+
+            document.getElementById('patient-name').textContent = patientName;
+            document.getElementById('patient-id').textContent = patientId;
+            document.getElementById('doctor-name').textContent = doctorName;
+            document.getElementById('report-date').textContent = dateString;
+
+            loadTestResults();
+        });
+
+        function loadTestResults() {
+            const testResultsTable = document.getElementById('test-results');
+            const testResults = JSON.parse(sessionStorage.getItem('testResults')) || [];
+            
+            testResultsTable.innerHTML = '';
+            testResults.forEach((test, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${test.name}</td>
+                    <td>${test.id}</td>
+                    <td>${test.sample}</td>
+                    <td>${test.lowRange}</td>
+                    <td>${test.highRange}</td>
+                    <td>${test.actualRange}</td>
+                    <td>${test.remarks}</td>
+                    <td>
+                        <button class="btn btn-edit" onclick="editTest(${index})">Edit</button>
+                        <button class="btn btn-delete" onclick="deleteTest(${index})">Delete</button>
+                    </td>
+                `;
+                testResultsTable.appendChild(row);
+            });
+        }
+
+        function addTest() {
+            const testResultsTable = document.getElementById('test-results');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><input type="text" placeholder="Test Name" id="test-name" /></td>
+                <td><input type="text" placeholder="Test ID" id="test-id" /></td>
+                <td><input type="text" placeholder="Sample" id="sample" /></td>
+                <td><input type="number" placeholder="Low Range" id="low-range" /></td>
+                <td><input type="number" placeholder="High Range" id="high-range" /></td>
+                <td><input type="number" placeholder="Actual Range" id="actual-range" /></td>
+                <td><input type="text" placeholder="Remarks" id="remarks" /></td>
+                <td>
+                    <button class="btn btn-save" onclick="saveTest(this)">Save</button>
+                    <button class="btn btn-cancel" onclick="cancelEdit(this)">Cancel</button>
+                </td>
+            `;
+            testResultsTable.appendChild(row);
+        }
+
+        function saveTest(button) {
+            const row = button.parentElement.parentElement;
+            const inputs = row.querySelectorAll('input');
+
+            const testName = inputs[0].value.trim();
+            if (!testName || !/^[a-zA-Z\s]+$/.test(testName)) {
+                alert('Test Name is required and must only contain alphabets and spaces.');
+                return;
+            }
+
+            const testId = inputs[1].value.trim();
+            const sample = inputs[2].value.trim();
+            const lowRange = parseFloat(inputs[3].value);
+            const highRange = parseFloat(inputs[4].value);
+            const actualRange = parseFloat(inputs[5].value);
+            const remarks = inputs[6].value.trim();
+
+            if (isNaN(lowRange) || isNaN(highRange) || isNaN(actualRange)) {
+                alert('Low Range, High Range, and Actual Range must be numbers.');
+                return;
+            }
+
+            if (lowRange >= highRange) {
+                alert('Low Range must be less than High Range.');
+                return;
+            }
+
+            const testResults = JSON.parse(sessionStorage.getItem('testResults')) || [];
+            if (testResults.some(test => test.name === testName)) {
+                alert('Test Name must be unique.');
+                return;
+            }
+
+            const newTest = {
+                name: testName,
+                id: testId,
+                sample: sample,
+                lowRange: lowRange,
+                highRange: highRange,
+                actualRange: actualRange,
+                remarks: remarks
+            };
+
+            testResults.push(newTest);
+            sessionStorage.setItem('testResults', JSON.stringify(testResults));
+
+            loadTestResults();
+        }
+
+        function deleteTest(index) {
+            const testResults = JSON.parse(sessionStorage.getItem('testResults')) || [];
+            testResults.splice(index, 1);
+            sessionStorage.setItem('testResults', JSON.stringify(testResults));
+            loadTestResults();
+        }
+
+        function editTest(index) {
+            const testResults = JSON.parse(sessionStorage.getItem('testResults')) || [];
+            const test = testResults[index];
+            
+            const row = document.querySelector(`#test-results tr:nth-child(${index + 1})`);
+            row.innerHTML = `
+                <td><input type="text" value="${test.name}" id="test-name" /></td>
+                <td><input type="text" value="${test.id}" id="test-id" /></td>
+                <td><input type="text" value="${test.sample}" id="sample" /></td>
+                <td><input type="number" value="${test.lowRange}" id="low-range" /></td>
+                <td><input type="number" value="${test.highRange}" id="high-range" /></td>
+                <td><input type="number" value="${test.actualRange}" id="actual-range" /></td>
+                <td><input type="text" value="${test.remarks}" id="remarks" /></td>
+                <td>
+                    <button class="btn btn-save" onclick="saveEdit(${index})">Save</button>
+                    <button class="btn btn-cancel" onclick="cancelEdit(this)">Cancel</button>
+                </td>
+            `;
+        }
+
+        function saveEdit(index) {
+            const row = document.querySelector(`#test-results tr:nth-child(${index + 1})`);
+            const inputs = row.querySelectorAll('input');
+
+            const testName = inputs[0].value.trim();
+            if (!testName || !/^[a-zA-Z\s]+$/.test(testName)) {
+                alert('Test Name is required and must only contain alphabets and spaces.');
+                return;
+            }
+
+            const testId = inputs[1].value.trim();
+            const sample = inputs[2].value.trim();
+            const lowRange = parseFloat(inputs[3].value);
+            const highRange = parseFloat(inputs[4].value);
+            const actualRange = parseFloat(inputs[5].value);
+            const remarks = inputs[6].value.trim();
+
+            if (isNaN(lowRange) || isNaN(highRange) || isNaN(actualRange)) {
+                alert('Low Range, High Range, and Actual Range must be numbers.');
+                return;
+            }
+
+            if (lowRange >= highRange) {
+                alert('Low Range must be less than High Range.');
+                return;
+            }
+
+            const testResults = JSON.parse(sessionStorage.getItem('testResults')) || [];
+            testResults[index] = {
+                name: testName,
+                id: testId,
+                sample: sample,
+                lowRange: lowRange,
+                highRange: highRange,
+                actualRange: actualRange,
+                remarks: remarks
+            };
+
+            sessionStorage.setItem('testResults', JSON.stringify(testResults));
+            loadTestResults();
+        }
+
+        function cancelEdit(button) {
+            loadTestResults();
+        }
+
+        function printReport() {
+            window.print();
+        }
+
+        function generateBill() {
+            const patientName = document.getElementById('patient-name').textContent;
+            const patientId = document.getElementById('patient-id').textContent;
+            const testResults = JSON.parse(sessionStorage.getItem('testResults')) || [];
+
+            if (!patientName || !patientId) {
+                alert('Patient details are missing.');
+                return;
+            }
+
+            const billData = {
+                patientName: patientName,
+                patientId: patientId,
+                testResults: testResults
+            };
+
+            sessionStorage.setItem('billData', JSON.stringify(billData));
+            window.location.href = '5.4.bill.html';
+        }
+
+        function cancel() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

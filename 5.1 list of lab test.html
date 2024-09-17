@@ -1,0 +1,893 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Test Management</title>
+    <!-- Bootstrap CSS -->
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+       body {
+    font-family: Arial, sans-serif;
+}
+
+.table-container {
+    margin: 30px;
+}
+
+.table {
+    border: 2px solid #86d8f8; /* Dark blue color */
+    color: #b0d1f3; /* Dark blue text color */
+}
+
+.table th, .table td {
+    text-align: center;
+    padding: 10px;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+.btn-edit, .btn-disable, .btn-add, .btn-back {
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.btn-edit {
+    border: 1px solid #003366;
+    color: #003366;
+    background-color: white;
+}
+
+.btn-edit:hover {
+    background-color: #003366;
+    color: white;
+}
+
+.btn-disable {
+    border: 1px solid #FFFF00; /* Yellow color */
+    color: #FFFF00;
+    background-color: white;
+}
+
+.btn-disable:hover {
+    background-color: #FFFF00;
+    color: black;
+}
+
+.btn-add {
+    background-color: #003366;
+    color: white;
+}
+
+.btn-add:hover {
+    background-color: #002244; /* Slightly darker shade */
+}
+
+.btn-back {
+    background-color: grey;
+    color: white;
+}
+
+.btn-back:hover {
+    background-color: #404040;
+}
+
+.form-container {
+    display: none;
+    margin: 30px auto;
+    padding: 20px;
+    max-width: 600px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 2px solid #003366;
+}
+
+.form-group label {
+    color: #003366;
+}
+
+.form-group input, .form-group textarea {
+    border-radius: 5px;
+}
+
+.form-group input:invalid, .form-group textarea:invalid {
+    border-color: rgb(76, 29, 29);
+}
+
+.form-group input:valid, .form-group textarea:valid {
+    border-color: green;
+}
+
+.form-title {
+    color: #003366;
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    background-color: #003366;
+    border-color: #003366;
+}
+
+.btn-primary:hover {
+    background-color: #002244;
+    border-color: #002244;
+}
+
+.invalid-feedback {
+    color: rgb(91, 42, 42);
+}
+
+    </style>
+</head>
+
+<body> -->
+    <!-- Navbar -->
+    
+
+    <!-- Lab Test List -->
+    <!-- <div id="labTestListContainer" class="table-container">
+        <button class="btn btn-add mb-3" onclick="showAddTestForm()">Add New Test</button>
+        <button class="btn btn-back mb-3" onclick="goBack()">Back</button>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Test Name</th>
+                    <th>Test Code</th>
+                    <th>Sample Collected</th>
+                    <th>Low Range</th>
+                    <th>High Range</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="labTestTableBody">
+                <!-- Static rows -->
+                <!-- <tr>
+                    <td>Blood Test</td>
+                    <td>BT001</td>
+                    <td>Blood</td>
+                    <td>0</td>
+                    <td>100</td>
+                    <td>Routine check-up</td>
+                    <td>
+                        <button class="btn btn-edit" onclick="editTest(this)">Edit</button>
+                        <button class="btn btn-disable" onclick="toggleDisable(this)">Disable</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Urine Test</td>
+                    <td>UT002</td>
+                    <td>Urine</td>
+                    <td>0</td>
+                    <td>200</td>
+                    <td>Check kidney function</td>
+                    <td>
+                        <button class="btn btn-edit" onclick="editTest(this)">Edit</button>
+                        <button class="btn btn-disable" onclick="toggleDisable(this)">Disable</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>X-Ray</td>
+                    <td>XR003</td>
+                    <td>X-Ray</td>
+                    <td>0</td>
+                    <td>500</td>
+                    <td>Bone scan</td>
+                    <td>
+                        <button class="btn btn-edit" onclick="editTest(this)">Edit</button>
+                        <button class="btn btn-disable" onclick="toggleDisable(this)">Disable</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>ECG</td>
+                    <td>EC004</td>
+                    <td>Heart</td>
+                    <td>0</td>
+                    <td>300</td>
+                    <td>Heart activity</td>
+                    <td>
+                        <button class="btn btn-edit" onclick="editTest(this)">Edit</button>
+                        <button class="btn btn-disable" onclick="toggleDisable(this)">Disable</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>  -->
+
+    <!-- Add/Test Edit Form -->
+    <!-- <div id="addTestFormContainer" class="form-container">
+        <h3 id="formTitle" class="form-title">Add Test Details</h3>
+        <form id="addTestForm" novalidate>
+            <div class="form-group">
+                <label for="testName">Test Name</label>
+                <input type="text" class="form-control" id="testName" placeholder="Enter Test Name" required>
+                <div class="invalid-feedback">Test Name must contain only letters and cannot be empty.</div>
+            </div>
+            <div class="form-group">
+                <label for="testCode">Test Code</label>
+                <input type="text" class="form-control" id="testCode" placeholder="Enter Test Code" required>
+                <div class="invalid-feedback">Please enter a test code.</div>
+            </div>
+            <div class="form-group">
+                <label for="sampleCollected">Sample Collected</label>
+                <input type="text" class="form-control" id="sampleCollected" placeholder="Enter Sample Collected" required>
+                <div class="invalid-feedback">Sample Collected must contain only letters and cannot be empty.</div>
+            </div>
+            <div class="form-group">
+                <label for="lowRange">Low Range</label>
+                <input type="number" class="form-control" id="lowRange" placeholder="Enter Low Range" required>
+                <div class="invalid-feedback">Low Range must be a number and cannot be empty.</div>
+            </div>
+            <div class="form-group">
+                <label for="highRange">High Range</label>
+                <input type="number" class="form-control" id="highRange" placeholder="Enter High Range" required>
+                <div class="invalid-feedback">High Range must be a number and cannot be empty.</div>
+                <div id="rangeError" class="invalid-feedback">High Range must be greater than Low Range.</div>
+            </div>
+            <div class="form-group">
+                <label for="remarks">Remarks</label>
+                <textarea class="form-control" id="remarks" rows="3" placeholder="Enter Remarks"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submitButton">Add Test</button>
+            <button type="button" class="btn btn-back" onclick="goBack()">Back</button>
+        </form>
+    </div> -->
+
+    <!-- JavaScript (Bootstrap and custom scripts) -->
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        let editingRow = null;
+    
+        function showLabTestList() {
+            document.getElementById('labTestListContainer').style.display = 'block';
+            document.getElementById('addTestFormContainer').style.display = 'none';
+        }
+    
+        function showAddTestForm() {
+            document.getElementById('labTestListContainer').style.display = 'none';
+            document.getElementById('addTestFormContainer').style.display = 'block';
+            document.getElementById('formTitle').textContent = 'Add Test Details';
+            document.getElementById('submitButton').textContent = 'Add Test';
+            editingRow = null; // Clear the editing row
+        }
+    
+        function goBack() {
+            showLabTestList();
+        }
+        function goBack() {
+        window.location.href = '5.labTechnician.html'  // Redirects to labtechnician.html
+    }
+        // Form submission and validation
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                const form = document.getElementById('addTestForm');
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    
+                    // Get form values
+                    const testName = document.getElementById('testName').value.trim();
+                    const testCode = document.getElementById('testCode').value.trim();
+                    const sampleCollected = document.getElementById('sampleCollected').value.trim();
+                    const lowRange = document.getElementById('lowRange').value.trim();
+                    const highRange = document.getElementById('highRange').value.trim();
+                    const remarks = document.getElementById('remarks').value.trim();
+    
+                    // Validation
+                    const testNamePattern = /^[a-zA-Z0-9\s]+$/;
+                    const sampleCollectedPattern = /^[a-zA-Z\s]+$/;
+                    
+                    let isValid = true;
+    
+                    if (!testName || !testNamePattern.test(testName)) {
+                        document.getElementById('testName').classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        document.getElementById('testName').classList.remove('is-invalid');
+                    }
+    
+                    if (!testCode) {
+                        document.getElementById('testCode').classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        document.getElementById('testCode').classList.remove('is-invalid');
+                    }
+    
+                    if (!sampleCollected || !sampleCollectedPattern.test(sampleCollected)) {
+                        document.getElementById('sampleCollected').classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        document.getElementById('sampleCollected').classList.remove('is-invalid');
+                    }
+    
+                    if (isNaN(lowRange) || isNaN(highRange) || lowRange === '' || highRange === '' || parseFloat(lowRange) >= parseFloat(highRange)) {
+                        document.getElementById('rangeError').style.display = 'block';
+                        isValid = false;
+                    } else {
+                        document.getElementById('rangeError').style.display = 'none';
+                    }
+    
+                    if (isValid) {
+                        const tableBody = document.getElementById('labTestTableBody');
+                        if (editingRow) {
+                            // Update existing row
+                            const cells = editingRow.getElementsByTagName('td');
+                            cells[0].textContent = testName;
+                            cells[1].textContent = testCode;
+                            cells[2].textContent = sampleCollected;
+                            cells[3].textContent = lowRange;
+                            cells[4].textContent = highRange;
+                            cells[5].textContent = remarks;
+                        } else {
+                            // Add new row
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${testName}</td>
+                                <td>${testCode}</td>
+                                <td>${sampleCollected}</td>
+                                <td>${lowRange}</td>
+                                <td>${highRange}</td>
+                                <td>${remarks}</td>
+                                <td>
+                                    <button class="btn btn-edit" onclick="editTest(this)">Edit</button>
+                                    <button class="btn btn-disable" onclick="toggleDisable(this)">Disable</button>
+                                </td>
+                            `;
+                            tableBody.appendChild(row);
+                        }
+    
+                        // Clear the form after submission
+                        form.reset();
+                        form.classList.remove('was-validated');
+                        showLabTestList();
+                    }
+                });
+            });
+        })();
+    
+        // Edit test functionality
+        function editTest(button) {
+            const row = button.parentNode.parentNode;
+            const cells = row.getElementsByTagName('td');
+            document.getElementById('testName').value = cells[0].textContent;
+            document.getElementById('testCode').value = cells[1].textContent;
+            document.getElementById('sampleCollected').value = cells[2].textContent;
+            document.getElementById('lowRange').value = cells[3].textContent;
+            document.getElementById('highRange').value = cells[4].textContent;
+            document.getElementById('remarks').value = cells[5].textContent;
+            showAddTestForm();
+            editingRow = row; // Set the row being edited
+            document.getElementById('formTitle').textContent = 'Edit Test Details';
+            document.getElementById('submitButton').textContent = 'Save Changes';
+        }
+    
+        // Toggle disable functionality
+        function toggleDisable(button) {
+            button.classList.toggle('btn-disable');
+            if (button.classList.contains('btn-disable')) {
+                button.textContent = 'Enable';
+            } else {
+                button.textContent = 'Disable';
+            }
+        }
+    
+        
+    </script>
+    
+</body>
+
+</html> --> 
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Test Management</title>
+    <!-- Bootstrap CSS -->
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(rgba(135, 206, 235, 0.6), rgba(0, 51, 102, 0.6)), url('F:/hospital-website-template/lab image/lab test.webp');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .container {
+            background-color: rgba(135, 206, 235, 0.5); /* Transparent white */
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .table-container {
+            margin: 15px;
+        }
+
+        .table {
+            border: 2px solid #003366; /* Dark blue color */
+            color: #003366; /* Dark blue text color */
+        }
+
+        .table th, .table td {
+            text-align: center;
+        }
+
+        .form-container {
+            margin-top: 20px;
+            background-image: url('F:\hospital-website-template\lab image\lab test.webp');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            padding: 20px;
+            border-radius: 10px;
+            color: blue;
+            max-width: 600px; /* Set the maximum width */
+            margin: 0 auto; /* Center the form */
+        }
+
+        .form-container h1 {
+            text-align: center;
+            color: white;
+        }
+
+        .btn {
+            margin: 5px;
+        }
+
+        .btn-warning {
+            background-color: #003366;
+            border-color: #003366;
+        }
+
+        .btn-warning:hover {
+            background-color: #002244;
+            border-color: #002244;
+        }
+
+        .btn-primary {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-primary:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+        .invalid-feedback {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>List of Lab Tests</h1>
+        <div class="table-container">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Test Name</th>
+                        <th>Test Code</th>
+                        <th>Sample Collected</th>
+                        <th>Low Range</th>
+                        <th>High Range</th>
+                        <th>Price</th>
+                        <th>Remarks</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="labTestTable"> -->
+                    <!-- Data will be dynamically inserted here -->
+                <!-- </tbody>
+            </table>
+            <button class="btn btn-primary" onclick="openAddTestForm()">Add Test</button>
+            <a href="5.labtechnician.html" class="btn btn-secondary">Back</a>
+        </div>
+
+        <div class="form-container" id="testFormContainer" style="display: none;">
+            <h1 id="formTitle">Add New Test</h1>
+            <form id="testForm" onsubmit="return validateForm(event)">
+                <div class="form-group">
+                    <label for="testName">Test Name:</label>
+                    <input type="text" class="form-control" id="testName" name="testName" required>
+                    <div class="invalid-feedback">Test Name must contain only alphabetic characters and spaces.</div>
+                </div>
+                <div class="form-group">
+                    <label for="testCode">Test Code:</label>
+                    <input type="text" class="form-control" id="testCode" name="testCode" required>
+                </div>
+                <div class="form-group">
+                    <label for="sampleCollected">Sample Collected:</label>
+                    <input type="text" class="form-control" id="sampleCollected" name="sampleCollected" required>
+                    <div class="invalid-feedback">Sample Collected must contain only alphabetic characters and spaces.</div>
+                </div>
+                <div class="form-group">
+                    <label for="lowRange">Low Range:</label>
+                    <input type="number" class="form-control" id="lowRange" name="lowRange" required>
+                </div>
+                <div class="form-group">
+                    <label for="highRange">High Range:</label>
+                    <input type="number" class="form-control" id="highRange" name="highRange" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="number" class="form-control" id="price" name="price" required>
+                </div>
+                <div class="form-group">
+                    <label for="remarks">Remarks:</label>
+                    <input type="text" class="form-control" id="remarks" name="remarks">
+                </div>
+                <button type="submit" class="btn btn-primary" id="submitButton">Add</button>
+                <button type="button" class="btn btn-secondary" onclick="closeForm()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <!-- <script>
+        let currentEditingIndex = -1;
+
+        function openAddTestForm() {
+            document.getElementById('testFormContainer').style.display = 'block';
+            document.getElementById('formTitle').innerText = 'Add New Test';
+            document.getElementById('testForm').reset();
+            document.getElementById('submitButton').innerText = 'Add';
+            currentEditingIndex = -1;
+        }
+
+        function openEditTestForm(index) {
+            document.getElementById('testFormContainer').style.display = 'block';
+            document.getElementById('formTitle').innerText = 'Edit Test';
+            document.getElementById('submitButton').innerText = 'Update';
+            currentEditingIndex = index;
+            const testData = JSON.parse(sessionStorage.getItem('labTests'))[index];
+            document.getElementById('testName').value = testData.testName;
+            document.getElementById('testCode').value = testData.testCode;
+            document.getElementById('sampleCollected').value = testData.sampleCollected;
+            document.getElementById('lowRange').value = testData.lowRange;
+            document.getElementById('highRange').value = testData.highRange;
+            document.getElementById('price').value = testData.price;
+            document.getElementById('remarks').value = testData.remarks;
+        }
+
+        function closeForm() {
+            document.getElementById('testFormContainer').style.display = 'none';
+        }
+
+        function validateForm(event) {
+            event.preventDefault();
+            const testName = document.getElementById('testName').value.trim();
+            const sampleCollected = document.getElementById('sampleCollected').value.trim();
+            const lowRange = parseFloat(document.getElementById('lowRange').value);
+            const highRange = parseFloat(document.getElementById('highRange').value);
+
+            // Validate alpha-only fields with spaces
+            if (!/^[A-Za-z\s]+$/.test(testName)) {
+                document.getElementById('testName').classList.add('is-invalid');
+                return false;
+            } else {
+                document.getElementById('testName').classList.remove('is-invalid');
+            }
+
+            if (!/^[A-Za-z\s]+$/.test(sampleCollected)) {
+                document.getElementById('sampleCollected').classList.add('is-invalid');
+                return false;
+            } else {
+                document.getElementById('sampleCollected').classList.remove('is-invalid');
+            }
+
+            // Validate range
+            if (lowRange >= highRange) {
+                alert('Low Range should be less than High Range.');
+                return false;
+            }
+
+            // Process form data
+            const formData = {
+                testName,
+                testCode: document.getElementById('testCode').value,
+                sampleCollected,
+                lowRange,
+                highRange,
+                price: parseFloat(document.getElementById('price').value),
+                remarks: document.getElementById('remarks').value
+            };
+
+            let labTests = JSON.parse(sessionStorage.getItem('labTests')) || [];
+            
+            if (currentEditingIndex === -1) {
+                // Add new test
+                labTests.push(formData);
+            } else {
+                // Update existing test
+                labTests[currentEditingIndex] = formData;
+            }
+            
+            sessionStorage.setItem('labTests', JSON.stringify(labTests));
+            updateTable();
+            closeForm();
+            return false;
+        }
+
+        function updateTable() {
+            const tableBody = document.getElementById('labTestTable');
+            tableBody.innerHTML = ''; // Clear existing rows
+
+            const labTests = JSON.parse(sessionStorage.getItem('labTests')) || [];
+            labTests.forEach((test, index) => {
+                const row = `<tr>
+                    <td>${test.testName}</td>
+                    <td>${test.testCode}</td>
+                    <td>${test.sampleCollected}</td>
+                    <td>${test.lowRange}</td>
+                    <td>${test.highRange}</td>
+                    <td>${test.price}</td>
+                    <td>${test.remarks}</td>
+                    <td>
+                        <button class="btn btn-warning" onclick="openEditTestForm(${index})">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteTest(${index})">Delete</button>
+                    </td>
+                </tr>`;
+                tableBody.insertAdjacentHTML('beforeend', row);
+            });
+        }
+
+        function deleteTest(index) {
+            const labTests = JSON.parse(sessionStorage.getItem('labTests'));
+            labTests.splice(index, 1);
+            sessionStorage.setItem('labTests', JSON.stringify(labTests));
+            updateTable();
+        }
+
+        document.addEventListener('DOMContentLoaded', updateTable);
+    </script>
+</body>
+</html> --> 
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Test List</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url('F:/hospital-website-template/lab image/_Bachelor of Medical Laboratory Science Career Scope.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #032649;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background-color: rgba(135, 206, 235, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        table {
+            margin: 20px 0;
+        }
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .disabled {
+            color: gray;
+            text-decoration: line-through;
+        }
+        .btn-disable {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn-enable {
+            background-color: #007bff;
+            color: white;
+        }
+        .form-container {
+            display: none;
+            margin-bottom: 20px;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">List of Lab Tests</h2>
+
+        <!-- Form to Add/Edit Test -->
+        <div class="form-container" id="testForm">
+            <h3 id="formTitle">Add New Test</h3>
+            <form id="labTestForm">
+                <div class="form-group">
+                    <label for="testName">Test Name:</label>
+                    <input type="text" class="form-control" id="testName">
+                    <small class="error" id="nameError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="testCode">Test Code:</label>
+                    <input type="text" class="form-control" id="testCode">
+                    <small class="error" id="codeError"></small>
+                </div>
+                <div class="form-group">
+                    <label for="testPrice">Test Price:</label>
+                    <input type="number" class="form-control" id="testPrice">
+                    <small class="error" id="priceError"></small>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="submitTestForm()">Save Test</button>
+                <button type="button" class="btn btn-secondary" onclick="cancelForm()">Cancel</button>
+            </form>
+        </div>
+
+        <!-- Add New Test and Back Buttons -->
+        <div class="d-flex justify-content-between mb-3">
+            <button class="btn btn-success" onclick="showAddForm()">Add New Test</button>
+            <button class="btn btn-primary" onclick="goBack()">Back </button>
+        </div>
+
+        <h4>List of Available Tests</h4>
+        <table class="table table-bordered" id="testsTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Test Name</th>
+                    <th>Test Code</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="testList">
+                <!-- Dynamic test rows will be added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let editIndex = null;
+
+        // Show form to add new test
+        function showAddForm() {
+            document.getElementById('formTitle').textContent = 'Add New Test';
+            document.getElementById('labTestForm').reset();
+            document.getElementById('testForm').style.display = 'block';
+            editIndex = null;
+        }
+
+        // Hide form
+        function cancelForm() {
+            document.getElementById('testForm').style.display = 'none';
+        }
+
+        // Go back to the Lab Technician page
+        function goBack() {
+            window.location.href = "5.labTechnician.html"; // Modify with the correct path to your Lab Technician page
+        }
+
+        // Save test to sessionStorage with validation
+        function submitTestForm() {
+            const testName = document.getElementById('testName').value.trim();
+            const testCode = document.getElementById('testCode').value.trim();
+            const testPrice = document.getElementById('testPrice').value.trim();
+
+            // Reset error messages
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('codeError').textContent = '';
+            document.getElementById('priceError').textContent = '';
+
+            // Validation: Test Name (only alphabets and spaces)
+            const nameRegex = /^[A-Za-z\s]+$/;
+            if (!nameRegex.test(testName)) {
+                document.getElementById('nameError').textContent = 'Test name should only contain alphabets and spaces.';
+                return;
+            }
+
+            // Validation: Test Price (only digits)
+            if (!/^\d+$/.test(testPrice)) {
+                document.getElementById('priceError').textContent = 'Test price should only contain digits.';
+                return;
+            }
+
+            // Basic validation for required fields
+            if (!testName || !testCode || !testPrice) {
+                document.getElementById('nameError').textContent = !testName ? 'Test name is required.' : '';
+                document.getElementById('codeError').textContent = !testCode ? 'Test code is required.' : '';
+                document.getElementById('priceError').textContent = !testPrice ? 'Test price is required.' : '';
+                return;
+            }
+
+            let tests = JSON.parse(sessionStorage.getItem('tests')) || [];
+
+            // Check for data repetition
+            const duplicate = tests.find((test, index) => test.testCode === testCode && index !== editIndex);
+            if (duplicate) {
+                alert('Test code must be unique.');
+                return;
+            }
+
+            // If editing an existing test, update it
+            if (editIndex !== null) {
+                tests[editIndex] = { testName, testCode, testPrice, disabled: false };
+            } else {
+                // Add new test
+                tests.push({ testName, testCode, testPrice, disabled: false });
+            }
+
+            sessionStorage.setItem('tests', JSON.stringify(tests));
+            document.getElementById('testForm').style.display = 'none';
+            displayTests();
+        }
+
+        // Display tests
+        function displayTests() {
+            const tests = JSON.parse(sessionStorage.getItem('tests')) || [];
+            const testList = document.getElementById('testList');
+            testList.innerHTML = '';
+
+            tests.forEach((test, index) => {
+                const row = document.createElement('tr');
+                row.className = test.disabled ? 'disabled' : '';
+                row.innerHTML = `
+                    <td>${test.testName}</td>
+                    <td>${test.testCode}</td>
+                    <td>${test.testPrice}</td>
+                    <td>
+                        <button class="btn btn-primary" onclick="editTest(${index})">Edit</button>
+                        <button class="btn btn-${test.disabled ? 'enable' : 'disable'}" onclick="toggleDisable(${index})">${test.disabled ? 'Enable' : 'Disable'}</button>
+                    </td>
+                `;
+                testList.appendChild(row);
+            });
+        }
+
+        // Edit test
+        function editTest(index) {
+            const tests = JSON.parse(sessionStorage.getItem('tests'));
+            const test = tests[index];
+
+            document.getElementById('testName').value = test.testName;
+            document.getElementById('testCode').value = test.testCode;
+            document.getElementById('testPrice').value = test.testPrice;
+
+            document.getElementById('formTitle').textContent = 'Edit Test';
+            document.getElementById('testForm').style.display = 'block';
+
+            editIndex = index;
+        }
+
+        // Enable/Disable test
+        function toggleDisable(index) {
+            const tests = JSON.parse(sessionStorage.getItem('tests'));
+            tests[index].disabled = !tests[index].disabled;
+            sessionStorage.setItem('tests', JSON.stringify(tests));
+            displayTests();
+        }
+
+        // Initialize by displaying stored tests
+        window.onload = displayTests;
+    </script>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
